@@ -1,7 +1,7 @@
-source 'http://ruby.taobao.org/'
+source 'https://rubygems.org/'
 
 gem 'rails', '3.2.13'
-
+gem 'bootstrap-sass', '2.0.4'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
