@@ -1,5 +1,5 @@
 GEM
-  remote: https://rubygems.org/
+  remote: http://ruby.taobao.org/
   specs:
     actionmailer (3.2.13)
       actionpack (= 3.2.13)
@@ -28,6 +28,8 @@ GEM
     activesupport (3.2.13)
       i18n (= 0.6.1)
       multi_json (~> 1.0)
+    annotate (2.5.0)
+      rake
     arel (3.0.2)
     bootstrap-sass (2.0.4.0)
     builder (3.0.4)
@@ -140,6 +142,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  annotate (= 2.5.0)
   bootstrap-sass (= 2.0.4)
   capybara (= 1.1.2)
   coffee-rails (= 3.2.2)
