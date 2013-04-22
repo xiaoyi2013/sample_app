@@ -1,9 +1,11 @@
 require 'spec_helper'
 
 describe "user pages" do
+
   subject { page }
 
   describe "sigup page" do
+
     before { visit signup_path}
 
     it { should have_selector('h1', text: "Sign Up")}
@@ -37,7 +39,7 @@ describe "user pages" do
         it { should have_content('error')}
       end
 
-    end
+    end  # with invalid information
 
     describe "with valid information" do
       before do
@@ -61,8 +63,50 @@ describe "user pages" do
         it { should have_link('Sign out') }
       end
 
+    end  # with valid information
+
+  end  # signup page
+
+  describe "edit page" do
+
+    let (:user) { FactoryGirl.create(:user) }
+    before { visit edit_user_path(user) }
+    
+    shared_examples_for "edit page should have content" do
+      it { should have_selector('title', text: "Edit user") }
+      it { should have_selector('h1', text: "Update your profile") }
+      it { should have_error_message("error") }
+      it { should have_link('change', href: 'http://gravatar.com/emails') }
     end
+    
+    describe "edit with invalid message" do
+      before { click_button "Save changes" }
+      it_should_behave_like "edit page should have content"
+    end
+    
+    describe "edit with valid message" do
+      before do
+        fill_in "Name",                   with:  user.name
+        fill_in "Email",                    with:  user.email
+        fill_in "Password",               with:  user.password
+        fill_in "Confirm Password",    with:  user.password_confirmation
+      end
+      
+      describe "click link to change photo of profile" do
+        before { click_link('change', href: "http://gravatar.com/emails") }
+        it { should have_link(user.name, href: "http://gravatar.com/#{user.email}" )}
+      end
 
-  end
+        describe "click button to change profile" do
+          before { click_button("Save changes") }
+          # it turned to user information show page
+          it { should have_selector('title', text: user.name) }
+        end
+      
+    end # edit with valid message
 
-end
+    
+  end # edit page
+  
+
+end  # user page
