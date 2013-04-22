@@ -16,8 +16,8 @@ Given /^the user has an account$/ do
 end
 
 Given /^the user submits valid signin information$/ do
-  Fill_in "Email",     with: @user.email
-  Fill_in "Password", with: @user.password
+  fill_in "Email",     with: @user.email
+  fill_in "Password", with: @user.password
   click_button "Sign in"
 end
 

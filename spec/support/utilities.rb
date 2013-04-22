@@ -10,8 +10,8 @@
 include ApplicationHelper
 
 def valid_signin(user)
-  Fill_in "Email",       with: user.email
-  Fill_in "Password",  with: user.password
+  fill_in "Email",       with: user.email
+  fill_in "Password",  with: user.password
   click_button "Sign in"
 end
 
