@@ -7,7 +7,7 @@ Given /^he submits invalid signin information$/ do
 end
 
 Given /^he should see an error message$/ do
-  page.should have_selector('div.alert.alert-error')
+  it { should have_error_message('Invalid')}
 end
 
 Given /^the user has an account$/ do
