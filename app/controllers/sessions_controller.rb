@@ -5,8 +5,8 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by_email(params[:session][:email])
-    if user && user.authenticate(params[:session][:password])
+    user = User.find_by_email(params[:email])
+    if user && user.authenticate(params[:password])
       # sign in success and show user'name and user's touxiang and micro_posts
       # redirect_to user_path(user)
       sign_in user
