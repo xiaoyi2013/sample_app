@@ -85,23 +85,22 @@ describe "user pages" do
     end
     
     describe "edit with valid message" do
+      let(:new_name) { "test2020" }
+      let(:new_email) { "test2020@gmail.com" }
       before do
-        fill_in "Name",                   with:  user.name
-        fill_in "Email",                    with:  user.email
+        fill_in "Name",                   with:  new_name
+        fill_in "Email",                    with:  new_email
         fill_in "Password",               with:  user.password
         fill_in "Confirm Password",    with:  user.password_confirmation
+        click_button("Save changes")
       end
       
-      describe "click link to change photo of profile" do
-        before { click_link('change', href: "http://gravatar.com/emails") }
-        it { should have_link(user.name, href: "http://gravatar.com/#{user.email}" )}
-      end
-
-        describe "click button to change profile" do
-          before { click_button("Save changes") }
-          # it turned to user information show page
-          it { should have_selector('title', text: user.name) }
-        end
+      # it turned to user information show page
+      it { should have_selector('title', text: new_name) }
+      it { should have_selector('div.alert.alert-success') }
+      it { should have_link('Sign out', href: signout_path) }
+      specify { user.reload.name.should == new_name }
+      specify { user.reload.email.should == new_email }
       
     end # edit with valid message
 
