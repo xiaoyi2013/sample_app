@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_filter :unauthorized,   only: [:index, :edit, :update]
   before_filter :correct_user,   only: [:edit, :update]
   before_filter :admin_user,     only: :destroy
-  before_filter :authorized,      only: [:new, :create]
+  before_filter :authorized,      only: :new
   def index
     @users = User.paginate(page: params[:page])
   end
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
     # flash[:notice] = "Can't edit another user's profile"
     @user = User.find(params[:id])
     
-    redirect_to root_path, notice: "Canit edit another user's profile" unless current_user?(@user)
+    redirect_to root_path unless current_user?(@user)
   end
 
   def admin_user

@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 
   def new
-    session[:login] = "yes" if sign_in?
+    session[:have_login] = "yes" if sign_in?
     @user = User.new
   end
 
