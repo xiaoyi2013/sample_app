@@ -29,7 +29,12 @@ module SessionsHelper
   end
 
   def redirect_back_or(default)
+    if (session[:login] == "yes")
+      redirect_to default
+      session.delete(:login)
+    else
     redirect_to (session[:return_to] || default)
     session.delete(:return_to)
+    end
   end
 end

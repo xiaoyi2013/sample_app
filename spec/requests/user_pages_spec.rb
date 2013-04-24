@@ -39,6 +39,15 @@ describe "user pages" do
         end
         it { should_not have_link('delete', href: user_path(admin)) }
       end
+
+      # describe "admin can't delete himself" do
+      #   let(:admin) { FactoryGirl.create(:admin) }
+      #   before do
+      #     sign_in admin
+      #     delete user_path(admin)
+      #   end
+      #   # delete admin, the count of Users - 1; but i can't describe it(It should using response.should format)
+      # end
     end #delete link
   end # index
   describe "sigup page" do
@@ -130,7 +139,7 @@ describe "user pages" do
         fill_in "Name",                   with:  new_name
         fill_in "Email",                    with:  new_email
         fill_in "Password",               with:  user.password
-        fill_in "Confirm Password",    with:  user.password_confirmation
+        fill_in "Confirmation",           with:  user.password_confirmation
         click_button("Save changes")
       end
       
@@ -145,6 +154,18 @@ describe "user pages" do
 
     
   end # edit page
-  
+
+  describe "sign" do
+    let(:user) { FactoryGirl.create(:user) }
+    before { sign_in user }
+    describe "access new action after sign-in" do
+      before { visit signup_path }
+      it { should have_content("This is the home page") }
+    end
+    describe "access create action after sign-in" do
+      before { post users_path }
+      specify { response.should redirect_to root_path }
+    end
+  end # sign
 
 end  # user page
