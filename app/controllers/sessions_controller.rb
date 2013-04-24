@@ -10,7 +10,8 @@ class SessionsController < ApplicationController
       # sign in success and show user'name and user's touxiang and micro_posts
       # redirect_to user_path(user)
       sign_in user
-      redirect_to user
+      # redirect_to user
+      redirect_back_or(user)
     else
       flash.now[:error] = "Invalid email/password combination" # not quite right
       render 'new'
@@ -21,4 +22,5 @@ class SessionsController < ApplicationController
     sign_out
     redirect_to root_path
   end
+
 end

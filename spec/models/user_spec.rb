@@ -32,6 +32,11 @@ describe User do
   it { should respond_to(:authenticate)}
   it { should respond_to(:remember_token)}
   it { should be_valid}
+  it { should_not be_admin }
+  describe "with admin attributes set to true" do
+    before {  @user.toggle!(:admin) }
+    it { should be_admin }
+  end
   describe "user's name can't be blank" do
     before { @user.name = " "}
 
