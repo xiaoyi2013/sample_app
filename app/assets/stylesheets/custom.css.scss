@@ -138,6 +138,10 @@ aside {
             margin-bottom: 3px;
         }
     }
+	textarea {
+		height: 100px;
+		margin-bottom: 5px;
+	}
 }
 
 .gravatar {
@@ -147,7 +151,7 @@ aside {
 
 /* forms */
 
-input, textare, select, .uneditable-input {
+input, textarea, select, .uneditable-input {
     border: 1px, solid #bbb;
     width: 100%;
     padding: 10px;
@@ -182,3 +186,24 @@ input, textare, select, .uneditable-input {
 		}
 	}
 }
+
+/* microposts */
+
+.microposts {
+	list-style: none;
+	margin: 10px 0 0 0;
+
+	li {
+		padding: 10px, 0;
+		border-top: 1px solid #e8e8e8;
+	}
+}
+
+.content {
+	display: block;
+}
+
+.timestamp {
+	color: $grayLight;
+}
+

@@ -158,7 +158,7 @@ describe "user pages" do
   describe "sign" do
     let(:user) { FactoryGirl.create(:user) }
     before { sign_in user }
-    describe "access new action after sign-in" do
+    describe "access 'new' action after sign-in" do
       before { visit signup_path }
       it { should have_content("This is the home page") }
     end
@@ -167,5 +167,22 @@ describe "user pages" do
       specify { response.should redirect_to root_path }
     end
   end # sign
+
+  describe "show page" do
+    let(:user) { FactoryGirl.create(:user) }
+    let!(:m1) { FactoryGirl.create(:micropost, user: user, created_at: 1.day.ago) }
+    let!(:m2) { FactoryGirl.create(:micropost, user: user, created_at: 1.hour.ago) }
+    before { visit user_path(user) }
+
+    it { should have_selector('title', text: user.name) }
+    it { should have_selector('h1', text: user.name) }
+    describe "microposts" do
+      it { should have_content("Microposts") }
+      it { should have_content(m1.content) }
+      it { should have_content(m2.content) }
+      it { should have_content(user.microposts.count) }
+    end
+    
+  end # show page
 
 end  # user page
