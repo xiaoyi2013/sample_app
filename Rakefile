@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Micropost::Application.load_tasks
+Sampleapp::Application.load_tasks

@@ -1,4 +1,4 @@
-Micropost::Application.routes.draw do
+Sampleapp::Application.routes.draw do
   # get "users/new"
 
   # get "static_pages/home"
