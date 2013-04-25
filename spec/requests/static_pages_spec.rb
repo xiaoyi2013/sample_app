@@ -17,6 +17,22 @@ describe "Static pages" do
 
     it_should_behave_like "all static pages"
     it{ should have_selector('title', :text => "| Home") }
+    describe "for sign-in users" do
+      let(:user) { FactoryGirl.create(:user) }
+      before do
+        FactoryGirl.create(:micropost, user: user, content: "first micropost")
+        FactoryGirl.create(:micropost, user: user, content: "second micropost")
+        sign_in user
+        visit root_path
+      end
+      it "should render the user's feed" do
+        user.feed.each do |item|
+          page.should have_selector('li##{item.id}', text: micropost.content)
+        end
+      end
+      
+    end
+    
   end
 
   describe "Help page" do

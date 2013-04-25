@@ -92,6 +92,17 @@ describe "AuthenticationPages" do
           it { should have_selector('title', text: "Sign in") }
         end
       end # in the Users controller
+      describe "in the Microposts controller" do
+        describe "submitting to the create action" do
+          before { post microposts_path }
+          specify { response.should redirect_to signin_path }
+        end
+        describe "submitting to the destory action" do
+          let(:micropost) { FactoryGirl.create(:micropost) }
+          before { delete micropost_path(micropost) }
+          specify { response.should redirect_to signin_path }
+        end
+      end
       describe "as non-admin user" do
         let(:user) { FactoryGirl.create(:user) }
         let(:non_admin) { FactoryGirl.create(:user) }
@@ -134,7 +145,7 @@ describe "AuthenticationPages" do
       
       describe "editing another person's page" do
         before {  visit edit_user_path(wrong_user) }
-        it { should have_content("This is the home page") }  # 
+        it { should have_content(user.name) }  # 
       end
 
       describe "updating another person's page" do

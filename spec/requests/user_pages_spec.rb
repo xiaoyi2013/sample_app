@@ -160,7 +160,7 @@ describe "user pages" do
     before { sign_in user }
     describe "access 'new' action after sign-in" do
       before { visit signup_path }
-      it { should have_content("This is the home page") }
+      it { should have_content(user.name) }
     end
     describe "access create action after sign-in" do
       before { post users_path }
