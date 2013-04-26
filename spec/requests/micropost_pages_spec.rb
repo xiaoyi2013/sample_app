@@ -27,4 +27,21 @@ describe "MicropostPages" do
       end
     end  # with valid information  
   end # micropost creation
+
+  describe "micropost destuction" do
+    before { FactoryGirl.create(:micropost, user: user) }
+    describe "in the profile page" do
+      before  {  visit user_path(user) }
+      it "should delete a micropost" do
+        expect { click_link("delete") }.to change(Micropost, :count).by(-1)
+      end
+    end
+
+    describe "in the root page" do
+      before { visit root_path }
+      it "should delete a micropost" do
+        expect { click_link("delete") }.to change(user.microposts, :count).by(-1)
+      end
+    end
+  end
 end
