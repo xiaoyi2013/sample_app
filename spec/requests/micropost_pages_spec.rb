@@ -28,7 +28,7 @@ describe "MicropostPages" do
     end  # with valid information  
   end # micropost creation
 
-  describe "micropost destuction" do
+  describe "micropost destruction" do
     before { FactoryGirl.create(:micropost, user: user) }
     describe "in the profile page" do
       before  {  visit user_path(user) }
@@ -43,5 +43,40 @@ describe "MicropostPages" do
         expect { click_link("delete") }.to change(user.microposts, :count).by(-1)
       end
     end
+  end # micropost destruction
+
+  describe "micropost quantity check" do
+    let!(:micropost) { FactoryGirl.create(:micropost, user: user) }    
+    before  do
+      visit root_path
+    end
+
+    it { should have_content("1 micropost") }
+    describe "should have some microposts" do
+      it { user.microposts.clear }
+      before(:all) { 32.times{ FactoryGirl.create(:micropost, user:user) } }
+      after(:all) { user.microposts.clear }
+      it { should have_content("32 microposts") }
+      it { should have_link('2') }
+      it "paginate check" do
+        click_link('2')
+        user.microposts.paginate(page: 2).each do |post|
+          page.should have_content(post.content)
+        end
+      end
+    end
+  end # micropost quantity check
+  
+  describe "link 'delete' deteck" do
+    let!(:another_user) { FactoryGirl.create(:user, name: "dingxueshen") }
+    let!(:micropost) { FactoryGirl.create(:micropost, user: another_user) }
+
+    before do
+      click_link("Users")
+      click_link("dingxueshen")
+    end
+    it { should_not have_link('delete') }
   end
+
+
 end
