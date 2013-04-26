@@ -5,7 +5,11 @@ Sampleapp::Application.routes.draw do
   # get "static_pages/help"
   # get "static_pages/about"
   # get "static_pages/contact"
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]
   

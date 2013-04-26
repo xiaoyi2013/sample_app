@@ -11,6 +11,7 @@ describe "Static pages" do
   end
 
   describe "Home page" do
+    
     before { visit root_path}
     let(:heading) { 'Sample App'}
     let(:page_title) { ''}
@@ -30,10 +31,18 @@ describe "Static pages" do
           page.should have_selector("li##{item.id}", text: item.content)
         end
       end
-      
-    end
+
+      describe "following and followes" do
+        before do
+          30.times { user.follow!(FactoryGirl.create(:user)) }
+          60.times { FactoryGirl.create(:user).follow!(user) }
+        end
+        it { should have_link("30 following", href: following_user_path(user)) }
+        it { should have_link("60 followers", href: followers_user_path(user)) }
+      end
+    end # for sign-in users
     
-  end
+  end # Home page
 
   describe "Help page" do
     before{ visit help_path}
