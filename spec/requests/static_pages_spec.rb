@@ -32,16 +32,16 @@ describe "Static pages" do
         end
       end
 
-      describe "following and followes" do
+      describe "followers/following counts" do
+        let(:other_user) { FactoryGirl.create(:user) }
         before do
-          30.times { user.follow!(FactoryGirl.create(:user)) }
-          60.times { FactoryGirl.create(:user).follow!(user) }
+          other_user.follow!(user)
+          visit root_path
         end
-        it { should have_link("30 following", href: following_user_path(user)) }
-        it { should have_link("60 followers", href: followers_user_path(user)) }
-      end
+        it { should have_link("0 following", href: following_user_path(user)) }
+        it { should have_link("1 followers", href: followers_user_path(user)) }
+      end # followers/following cunts
     end # for sign-in users
-    
   end # Home page
 
   describe "Help page" do
